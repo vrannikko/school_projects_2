@@ -1,0 +1,54 @@
+ ----------------------------
+ CREATOR OF CODE:             
+ Vilhelmiina Rannikko         
+ vilhelmiina.rannikko@tuni.fi 
+ vqvira                       
+ H290652                      
+ ----------------------------
+
+INSTRUCTIONS FOR THE GAME:
+The game is first initalized by asking the user to input wanted seed and game goal values. After 
+this is done, the player may press the "Start" button and begin the game. The game itself is a
+model of the basic 2048 game, in which the player starts with a (in this code's case) 4x4 grid 
+filled with empty squares and a couple of squares with number 2's in randomized order. Using 
+the WASD keys, the player may choose to move either up, down, right or left. Doing so causes
+all the numbered tiles to move in to the chosen direction within the grid. If two same numbers 
+arrive next to each other either horizontally or vertically this way, they are merged, and the
+tile now displays a new number, the product of the numbers. The goal is to keep merging number
+tiles in this manner, and avoid filling the board - because every turn, a new number 2 appears
+in to a new empty tile. The player wins if they reach the given goal value, and they lose if 
+the board fills up with no possible moves before the goal is reached.
+
+THE CODE:
+The code is produced as a Qt Widgets Application, and it has two classes implemented to it from the base code. The files include
+- gameboard.cpp
+- gameboard.hh
+- numbertile.cpp
+- numbertile.hh
+
+The code thus uses some of the methods and attributes of the GameBoard and NumberTile classes. The game also initializes a GameBoard object for itself, and uses it's "inner board" structure to run the game forward, updating the user viewed UI board with its values.
+
+THE UI:
+The UI consists of 
+- two QSpinbox elements for asking user input for seed and goal values
+- a SIZExSIZE (in this case 4x4) grid of 16 QLabels
+- two QPushButtons, one for starting the game and one for resetting
+- QLabels for informing player on win and loss, how to play, and what to input in spin boxes as
+  well as for displaying the goal value
+
+The user must input a seed and a goal value on the QSpinBoxes, and if not done, the game will assume a basic goal of 2048 and use 0 as seed. While typing, infoGoalLabel reacts to the valueChanged() signal and displays the goal counted from the power the user has types in real time. Then "Start" must be pressed for the numbers to appear on the grid. The player can begin playing, by using WASD keys, which communicate with the code corresponsible for calculating tiles according to their direction. Either at the end of the game or in the middle of it the game can be reset by pressing the "Reset" button. This will clear the board, and the user is free to press "Start" again or input new seed or goal values. The WASD keys are disabled during this time.
+Once pressed, the "Start"/"Reset" buttons will be disabled for the time being, to avoid the player clicking on them twice in a row. They are enabled once they are needed again.
+On winning or losing the game, a banner will display on the screen, informing the player on their win/loss. The game stops and the WASD keys are disabled. The player can begin a new game by pressing "Reset."
+
+
+MODIFICATIONS MADE IN BASE CODE:
+In "gameboard.hh" - Moved the "board_" class attribute from private access to public. This was done to gain access to the internal structure as means to find and use the NumberTile values for 
+displaying them on the GUI.
+
+In "numbertile.hh" - Moved the "value_" class attribute from private access to public. Reasons are 
+the same as above.
+
+NOTES ON THE GAME's OR CODES FEATURES:
+- The dir variable in the code behaved somewhat bizarrely, despite the Coords variables being directly copied from the base code's main.cpp. This is why on lines 175-178 of mainwindow.cpp the WASD keys are connected seemingly to "wrong" directions.
+
+- The grid is produced entirely by bordered QLabels
